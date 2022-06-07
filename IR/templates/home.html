@@ -1,0 +1,145 @@
+{% include 'main.html' %}
+<style>
+
+    h1 
+    {
+        color: blue;
+        text-align: center;
+        font-size: 300%
+    }
+
+    h3   
+    {
+        color: black;
+        border: 2px solid powderblue;
+        padding: 30px;
+        margin: 50px;
+        text-align: center;
+    }
+
+    p
+    {
+        color: red;
+        text-align: center;
+    }
+
+    input[type=search]
+    {
+        display: block;
+    margin: 0 auto;
+    
+    padding: 10px;
+        font-size: 100%
+        height: 2em;
+        width: 75%;
+        text-align:center;
+    }
+
+    label{
+        align:center;
+    }
+
+    ul{
+        border: 1px solid black;
+    }
+    
+    </style>
+
+
+<body>
+    {% if advanced %}
+        <div style="text-align:center;">
+            {% for r in advanced %}
+                {{ r }}
+                <br>
+            {% endfor %}
+        </div>
+    {% elif results %}
+        {% for r in results %}
+            {{ r }}
+            <br>
+        {% endfor %}
+    {% else %}
+        <div>
+            <h1>Welcome To Information Retrieval System</h1>
+            <h3>Students: Leen Mohammed, Leen To'ma, Dania Dabaa, Hayat Anouz</h3>
+        </div>
+
+        <div  style="text-align:center;">
+            <form method="GET" action="{% url 'normal1' %}">
+                <button onclick="{% url 'normal1' %}" name="q" value="" >  See results of using our word embadding (data_set_1)  </button>
+            </form>
+            <br>
+            <form method="GET" action="{% url 'normal2' %}">
+                <button onclick="{% url 'normal2' %}" name="q" value="" >  See results of using our word embadding (data_set_2)  </button>
+            </form>
+            <br>
+        </div>
+
+        <div  style="text-align:center;">
+            <form method="GET" action="{% url 'advancedModel' %}">
+                <button onclick="{% url 'advancedModel' %}" name="q" value="" >  See results of using advanced word embadding (data_set_1)  </button>
+            </form>
+            <br>
+            <form method="GET" action="{% url 'advancedMode2' %}">
+                <button onclick="{% url 'advancedMode2' %}" name="q" value="" >  See results of using advanced word embadding (data_set_2)  </button>
+            </form>
+            <br>
+        </div>
+        <div>
+            
+            <form method="GET" action="{% url 'home' %}">
+                <label>
+                <title>Search</title>
+                <input type="search" name="q" placeholder= "Enter your query please..." />
+                <div style="text-align:center;">
+                    <input type="checkbox" id="1" name="DataSet1" value="1">
+                    <label for="1"> DataSet 1</label>
+                    <input type="checkbox" id="2" name="DataSet2" value="2">
+                    <label for="2"> DataSet 2</label>
+                </div>    
+                </label>
+            </form>
+
+            <div style="text-align:center;">
+            
+                {% if suggestion %}
+
+                    {% if dataset1 %}
+                        <form method="GET" action="{% url 'Sugg1' %}">
+                            <button onclick="{% url 'Sugg1' %}" name="q" value={{ suggestion }} >  Do you mean : {{ suggestion }}  </button>
+                        </form>
+                    
+                    {% elif dataset2 %}
+                        <form method="GET" action="{% url 'Sugg2' %}">
+                            <button onclick="{% url 'Sugg2' %}" name="q" value={{ suggestion }} >  Do you mean : {{ suggestion }}  </button>
+                        </form>
+
+                    {% endif %}
+                    
+                {% endif %}
+
+            </div> 
+        
+        </div>
+
+        <div>
+            
+            {% if messages %}
+                <ul >
+                    {% for id , message in messages.items %}
+                        <li>
+                            {{ id }}
+                            <br>
+                            {{ message }}
+                            <br><br>
+                        </li>
+                    {% endfor %}
+                
+                </ul>
+            {% endif %}
+        </div>
+    {% endif %}
+
+</body>
+
